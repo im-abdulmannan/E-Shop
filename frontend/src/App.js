@@ -15,7 +15,9 @@ import {
   ProductDetailsPage,
   ProductsPage,
   ProfilePage,
-  SignupPage,
+  SellerActivationPage,
+  ShopCreatePage,
+  SignupPage
 } from "./Routes";
 import { loadUser } from "./redux/actions/userAction";
 import Store from "./redux/store";
@@ -50,6 +52,19 @@ const App = () => {
                   <ProfilePage />
                 </ProtectedRoute>
               }
+            />
+            {/*  <Route
+              path="/checkout"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <CheckoutPage />
+                </ProtectedRoute>
+              }
+            /> */}
+            <Route path="/shop-create" element={<ShopCreatePage />} />
+            <Route
+              path="/seller/activation/:activation_token"
+              element={<SellerActivationPage />}
             />
           </Routes>
           <ToastContainer

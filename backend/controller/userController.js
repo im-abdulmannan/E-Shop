@@ -12,6 +12,7 @@ const catchAsyncError = require("../middleware/catchAsyncError");
 const sendToken = require("../utils/jwtToken");
 const { isAuthenticated } = require("../middleware/auth");
 
+// Create user
 router.post("/create-user", upload.single("file"), async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
@@ -46,7 +47,7 @@ router.post("/create-user", upload.single("file"), async (req, res, next) => {
       await sendMail({
         email: user.email,
         subject: "Activate Your account",
-        message: `Hello ${user.name},\n\t Please click on the link below to activate you account:\n\n${activationUrl}`,
+        message: `Hello ${user.name},\n\t Please click on the link below to activate your account:\n\n${activationUrl}`,
       });
       res.status(201).json({
         success: true,

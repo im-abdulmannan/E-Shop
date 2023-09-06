@@ -96,7 +96,7 @@ const Header = ({ activeHeading }) => {
           </div>
 
           <div className={`${styles.button}`}>
-            <Link to="/seller">
+            <Link to="/shop-create">
               <h1 className="flex text-white items-center">
                 Become Seller <IoIosArrowForward className=" ml-1" />
               </h1>
@@ -258,8 +258,7 @@ const Header = ({ activeHeading }) => {
                   onClick={() => setOpen(false)}
                 />
               </div>
-
-              <div className="my-8 w-[92%] m-auto h-[40px]">
+              <div className="my-8 w-[92%] m-auto h-[40px] relative">
                 <input
                   type="search"
                   placeholder="Search Product..."
@@ -289,6 +288,46 @@ const Header = ({ activeHeading }) => {
                       })}
                   </div>
                 ) : null}
+              </div>
+              <Navbar active={activeHeading} />
+
+              <div className={`${styles.button} ml-4 !rounded-[4px]`}>
+                <Link to={"/shop-create"}>
+                  <h1 className="text-white flex items-center">
+                    Become Seller <IoIosArrowForward className="ml-1" />
+                  </h1>
+                </Link>
+              </div>
+              <br />
+              <br />
+              <div className="flex gap-1 w-full justify-center">
+                {isAuthenticated ? (
+                  <div>
+                    <Link to={"/profile"}>
+                      <img
+                        src={`${backend_url}${user.avatar}`}
+                        className="w-[60px] h-[60px] rounded-full border-[3px] border-green-400"
+                        alt=""
+                      />
+                    </Link>
+                  </div>
+                ) : (
+                  <>
+                    <Link
+                      to={"/login"}
+                      className="text-[18px] pr-10px] text-[#000000b7]"
+                    >
+                      Login
+                    </Link>
+                    <p className="text-[18px] pr-10px] text-[#000000b7]"> / </p>
+                    <Link
+                      to={"/sign-up"}
+                      className="text-[18px] pr-10px] text-[#000000b7]"
+                    >
+                      Sign up
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
