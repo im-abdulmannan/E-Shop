@@ -22,7 +22,7 @@ const SellerActivationPage = () => {
       };
       activationEmail();
     }
-  }, []);
+  }, [activation_token]);
 
   return (
     <div

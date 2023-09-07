@@ -17,20 +17,26 @@ import {
   ProfilePage,
   SellerActivationPage,
   ShopCreatePage,
-  SignupPage
+  ShopLoginPage,
+  SignupPage,
 } from "./Routes";
-import { loadUser } from "./redux/actions/userAction";
+import SellerProtectedRoute from "./SellerProtectedRoute";
+import { ShopHomePage } from "./ShopeRoutes.js";
+import { loadSeller, loadUser } from "./redux/actions/userAction";
 import Store from "./redux/store";
 
 const App = () => {
   const { loading, isAuthenticated } = useSelector((state) => state.user);
+  const { isLoading, isSeller } = useSelector((state) => state.seller);
+
   useEffect(() => {
     Store.dispatch(loadUser());
+    Store.dispatch(loadSeller());
   }, []);
 
   return (
     <>
-      {loading ? null : (
+      {loading || isLoading ? null : (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -61,7 +67,17 @@ const App = () => {
                 </ProtectedRoute>
               }
             /> */}
+            {/* Shop Route */}
             <Route path="/shop-create" element={<ShopCreatePage />} />
+            <Route path="/shop-login" element={<ShopLoginPage />} />
+            <Route
+              path="/shop/:id"
+              element={
+                <SellerProtectedRoute isSeller={isSeller}>
+                  <ShopHomePage />
+                </SellerProtectedRoute>
+              }
+            />
             <Route
               path="/seller/activation/:activation_token"
               element={<SellerActivationPage />}

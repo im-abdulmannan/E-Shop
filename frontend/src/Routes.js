@@ -10,6 +10,7 @@ import ProductsPage from "./pages/ProductsPage";
 import ProfilePage from "./pages/ProfilePage";
 import SellerActivationPage from "./pages/SellerActivationPage";
 import ShopCreatePage from "./pages/ShopCreatePage";
+import ShopLoginPage from "./pages/ShopLoginPage";
 import SignupPage from "./pages/SignupPage";
 
 export {
@@ -22,7 +23,8 @@ export {
     LoginPage,
     ProductDetailsPage,
     ProductsPage,
-    ProfilePage, SellerActivationPage, ShopCreatePage,
-    SignupPage
+    ProfilePage,
+    SellerActivationPage,
+    ShopCreatePage, ShopLoginPage, SignupPage
 };
 
