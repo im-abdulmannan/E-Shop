@@ -19,6 +19,46 @@ export const userReducer = createReducer(initialState, {
     state.error = action.payload;
   },
 
+  // Update user info
+  UpdateUserInfoRequest: (state) => {
+    state.loading = true;
+  },
+  UpdateUserInfoSuccess: (state, action) => {
+    state.loading = false;
+    state.user = action.payload;
+  },
+  UpdateUserInfoFail: (state, action) => {
+    state.loading = false;
+    state.error = action.payload;
+  },
+
+  // Update user address
+  UpdateUserAddressRequest: (state) => {
+    state.addressLoading = true;
+  },
+  UpdateUserAddressSuccess: (state, action) => {
+    state.addressLoading = false;
+    state.user = action.payload;
+  },
+  UpdateUserAddressFail: (state, action) => {
+    state.addressLoading = false;
+    state.error = action.payload;
+  },
+
+  // Delete user address
+  DeleteUserAddressRequest: (state) => {
+    state.addressLoading = true;
+  },
+  DeleteUserAddressSuccess: (state, action) => {
+    state.addressLoading = false;
+    state.user = action.payload;
+  },
+  DeleteUserAddressFail: (state, action) => {
+    state.addressLoading = false;
+    state.error = action.payload;
+  },
+
+  // Clear errors
   clearError: (state) => {
     state.error = null;
   },

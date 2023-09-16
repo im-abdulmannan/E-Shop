@@ -1,10 +1,19 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { productData } from "../../static/data";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { getAllShopProducts } from "../../redux/actions/productAction";
 import styles from "../../styles/styles";
 import ProductCard from "../Route/ProductCard/ProductCard";
 
 const ShopProfileData = ({ isOwner }) => {
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const { products } = useSelector((state) => state.product);
+
+  useEffect(() => {
+    dispatch(getAllShopProducts(id));
+  }, []);
+
   const [active, setActive] = useState(1);
 
   return (
@@ -56,12 +65,14 @@ const ShopProfileData = ({ isOwner }) => {
       </div>
 
       <br />
-      <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-3 lg:gap-[25px] xl:grid-cols-4 xl:gap-[20px] mb-12 border-0">
-        {productData &&
-          productData.map((i, index) => (
-            <ProductCard key={index} data={i} isShop={true} />
-          ))}
-      </div>
+      {active === 1 && (
+        <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-3 lg:gap-[25px] xl:grid-cols-4 xl:gap-[20px] mb-12 border-0">
+          {products &&
+            products.map((i, index) => (
+              <ProductCard key={index} data={i} isShop={true} />
+            ))}
+        </div>
+      )}
     </div>
   );
 };

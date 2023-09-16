@@ -1,7 +1,7 @@
 import React from "react";
 import DashboardHeader from "../../components/Shop/Layout/DashboardHeader";
 import DashboardSidebar from "../../components/Shop/Layout/DashboardSidebar";
-import ShopAllProducts from "../../components/Shop/ShopAllProducts";
+import ShopAllCoupons from "../../components/Shop/ShopAllCoupons";
 
 const ShopAllProductsPage = () => {
   return (
@@ -12,7 +12,7 @@ const ShopAllProductsPage = () => {
           <DashboardSidebar active={9} />
         </div>
         <div className="w-full flex justify-center">
-          <ShopAllProducts />
+          <ShopAllCoupons />
         </div>
       </div>
     </div>

@@ -5,12 +5,14 @@ import ShopCreateEventPage from "../pages/Shop/ShopCreateEventPage";
 import ShopCreateProductPage from "../pages/Shop/ShopCreateProductPage";
 import ShopDashboardPage from "../pages/Shop/ShopDashboardPage";
 import ShopHomePage from "../pages/Shop/ShopHomePage";
+import ShopPreviewPage from "../pages/Shop/ShopPreviewPage";
 
 export {
     ShopAllCouponsPage, ShopAllEventPage, ShopAllProductsPage,
     ShopCreateEventPage,
     ShopCreateProductPage,
     ShopDashboardPage,
-    ShopHomePage
+    ShopHomePage,
+    ShopPreviewPage
 };
 

@@ -5,8 +5,8 @@ import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
-    deleteShopEvent,
-    getAllShopEvents,
+  deleteShopEvent,
+  getAllShopEvents,
 } from "../../redux/actions/eventAction";
 import Loader from "../Layout/Loader";
 
@@ -22,7 +22,7 @@ const ShopAllEvents = () => {
 
   const handleDelete = (id) => {
     dispatch(deleteShopEvent(id));
-    // window.location.reload();
+    window.location.reload();
   };
 
   const columns = [
@@ -40,10 +40,10 @@ const ShopAllEvents = () => {
       sortable: false,
       renderCell: (params) => {
         const d = params.row.name;
-        const product_name = d.replace(/\s+/g, "-");
+        const event_name = d.replace(/\s+/g, "-");
         return (
           <>
-            <Link to={`/product/${product_name}`}>
+            <Link to={`/event/${event_name}`}>
               <Button>
                 <AiOutlineEye size={20} />
               </Button>

@@ -46,6 +46,19 @@ export const productReducer = createReducer(initialState, {
     state.error = action.payload;
   },
 
+  // Get all products
+  GetAllProductsRequest: (state) => {
+    state.isLoading = true;
+  },
+  GetAllProductsSuccess: (state, action) => {
+    state.isLoading = false;
+    state.allProducts = action.payload;
+  },
+  GetAllProductsFail: (state, action) => {
+    state.isLoading = false;
+    state.error = action.payload;
+  },
+
   // Clear Error
   clearError: (state) => {
     state.error = null;

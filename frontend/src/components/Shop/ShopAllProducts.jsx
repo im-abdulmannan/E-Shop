@@ -98,6 +98,7 @@ const ShopAllProducts = () => {
             disableSelectionOnClick
             autoHeight
           />
+          
         </div>
       )}
     </>

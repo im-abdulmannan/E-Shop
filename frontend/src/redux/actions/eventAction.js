@@ -72,3 +72,23 @@ export const deleteShopEvent = (id) => async (dispatch) => {
     });
   }
 };
+
+// Get all events
+export const getAllEvents = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: "GetAllEventsRequest",
+    });
+
+    const { data } = await axios.get(`${server}/event/get-all-events`);
+    dispatch({
+      type: "GetAllEventsSuccess",
+      payload: data.events,
+    });
+  } catch (error) {
+    dispatch({
+      type: "GetAllEventsFail",
+      payload: error.response.data.message,
+    });
+  }
+};

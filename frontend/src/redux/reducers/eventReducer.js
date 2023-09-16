@@ -46,6 +46,19 @@ export const eventReducer = createReducer(initialState, {
     state.error = action.payload;
   },
 
+  // Get product of single shop
+  GetAllEventsRequest: (state) => {
+    state.isLoading = true;
+  },
+  GetAllEventsSuccess: (state, action) => {
+    state.isLoading = false;
+    state.allEvents = action.payload;
+  },
+  GetAllEventsFail: (state, action) => {
+    state.isLoading = false;
+    state.error = action.payload;
+  },
+
   // Clear Error
   clearError: (state) => {
     state.error = null;

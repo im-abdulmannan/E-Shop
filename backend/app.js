@@ -28,11 +28,17 @@ const user = require("./controller/userController");
 const product = require("./controller/productController");
 const shop = require("./controller/shopController");
 const event = require("./controller/eventController");
+const coupon = require("./controller/couponController");
+const payment = require("./controller/paymentController");
+const order = require("./controller/orderController");
 
 app.use("/api/v2/user", user);
 app.use("/api/v2/product", product);
 app.use("/api/v2/shop", shop);
 app.use("/api/v2/event", event);
+app.use("/api/v2/coupon", coupon);
+app.use("/api/v2/payment", payment);
+app.use("/api/v2/order", order);
 
 app.use(ErrorHandler);
 

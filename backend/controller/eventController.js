@@ -91,4 +91,21 @@ router.delete(
   })
 );
 
+// Get all events
+router.get(
+  "/get-all-events",
+  catchAsyncError(async (req, res, next) => {
+    try {
+      const events = await Event.find();
+
+      res.status(201).json({
+        success: true,
+        events,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+
 module.exports = router;

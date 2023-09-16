@@ -20,6 +20,9 @@ const couponSchema = new mongoose.Schema({
     type: Object,
     required: true,
   },
+  selectedProduct: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now(),

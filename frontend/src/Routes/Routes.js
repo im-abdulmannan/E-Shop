@@ -5,6 +5,8 @@ import EventsPage from "../pages/EventsPage";
 import FAQPage from "../pages/FAQPage";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
+import OrderSuccessPage from "../pages/OrderSuccessPage";
+import PaymentPage from "../pages/PaymentPage";
 import ProductDetailsPage from "../pages/ProductDetailsPage";
 import ProductsPage from "../pages/ProductsPage";
 import ProfilePage from "../pages/ProfilePage";
@@ -18,13 +20,14 @@ export {
   BestSellingPage,
   CheckoutPage,
   EventsPage,
-  FAQPage,
-  HomePage,
-  LoginPage,
+  FAQPage, HomePage,
+  LoginPage, OrderSuccessPage, PaymentPage,
   ProductDetailsPage,
   ProductsPage,
   ProfilePage,
   SellerActivationPage,
-  ShopCreatePage, ShopLoginPage, SignupPage
+  ShopCreatePage,
+  ShopLoginPage,
+  SignupPage
 };
 
