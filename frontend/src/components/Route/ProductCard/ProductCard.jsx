@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {
   AiFillHeart,
-  AiFillStar,
   AiOutlineEye,
   AiOutlineHeart,
-  AiOutlineShoppingCart,
-  AiOutlineStar,
+  AiOutlineShoppingCart
 } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -17,6 +15,7 @@ import {
 } from "../../../redux/actions/wishlistAction";
 import { backend_url } from "../../../server";
 import styles from "../../../styles/styles";
+import Ratings from "../../Products/Ratings";
 import ProductCardDetails from "../ProductCardDetails/ProductCardDetails";
 
 const ProductCard = ({ data }) => {
@@ -80,31 +79,7 @@ const ProductCard = ({ data }) => {
           </h4>
 
           <div className="flex">
-            <AiFillStar
-              size={20}
-              className="mr-2 cursor-pointer"
-              color="#F6BA00"
-            />
-            <AiFillStar
-              size={20}
-              className="mr-2 cursor-pointer"
-              color="#F6BA00"
-            />
-            <AiFillStar
-              size={20}
-              className="mr-2 cursor-pointer"
-              color="#F6BA00"
-            />
-            <AiFillStar
-              size={20}
-              className="mr-2 cursor-pointer"
-              color="#F6BA00"
-            />
-            <AiOutlineStar
-              size={20}
-              className="mr-2 cursor-pointer"
-              color="#F6BA00"
-            />
+            <Ratings rating={data?.ratings} />
           </div>
 
           <div className="py-2 flex items-center justify-between">

@@ -23,6 +23,7 @@ const Header = ({ activeHeading }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
   const { allProducts } = useSelector((state) => state.product);
   const { isAuthenticated, user } = useSelector((state) => state.user);
+  const { isSeller } = useSelector((state) => state.seller);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [searchData, setSearchData] = useState(null);
@@ -98,13 +99,14 @@ const Header = ({ activeHeading }) => {
             ) : null}
           </div>
 
-          <div className={`${styles.button}`}>
-            <Link to="/shop-create">
+          <Link to="/shop-create">
+            <div className={`${styles.button} min-w-max px-4`}>
               <h1 className="flex text-white items-center">
-                Become Seller <IoIosArrowForward className=" ml-1" />
+                {isSeller && isSeller ? "Go to shop" : "Become a seller"}
+                <IoIosArrowForward className=" ml-1" />
               </h1>
-            </Link>
-          </div>
+            </div>
+          </Link>
         </div>
       </div>
 
@@ -309,13 +311,16 @@ const Header = ({ activeHeading }) => {
               </div>
               <Navbar active={activeHeading} />
 
-              <div className={`${styles.button} ml-4 !rounded-[4px]`}>
-                <Link to={"/shop-create"}>
+              <Link to={"/shop-create"}>
+                <div
+                  className={`${styles.button} ml-4 !rounded-[4px] min-w-max px-2`}
+                >
                   <h1 className="text-white flex items-center">
-                    Become Seller <IoIosArrowForward className="ml-1" />
+                    {isSeller && isSeller ? "Go to shop" : "Become a seller"}
+                    <IoIosArrowForward className="ml-1" />
                   </h1>
-                </Link>
-              </div>
+                </div>
+              </Link>
               <br />
               <br />
               <div className="flex gap-1 w-full justify-center">

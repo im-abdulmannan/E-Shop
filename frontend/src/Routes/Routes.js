@@ -14,20 +14,26 @@ import SellerActivationPage from "../pages/SellerActivationPage";
 import ShopCreatePage from "../pages/ShopCreatePage";
 import ShopLoginPage from "../pages/ShopLoginPage";
 import SignupPage from "../pages/SignupPage";
+import UserOrderDetailsPage from "../pages/UserOrderDetailsPage";
+import UserTrackOrderPage from "../pages/UserTrackOrderPage";
 
 export {
   ActivationPage,
   BestSellingPage,
   CheckoutPage,
   EventsPage,
-  FAQPage, HomePage,
-  LoginPage, OrderSuccessPage, PaymentPage,
+  FAQPage,
+  HomePage,
+  LoginPage,
+  OrderSuccessPage,
+  PaymentPage,
   ProductDetailsPage,
   ProductsPage,
   ProfilePage,
   SellerActivationPage,
   ShopCreatePage,
   ShopLoginPage,
-  SignupPage
+  SignupPage,
+  UserOrderDetailsPage,
+  UserTrackOrderPage
 };
-

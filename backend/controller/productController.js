@@ -7,6 +7,7 @@ const { upload } = require("../multer");
 const { isSeller, isAuthenticated } = require("../middleware/auth");
 const ErrorHandler = require("../utils/ErrorHandler");
 const Product = require("../model/productModel");
+const Order = require("../model/orderModel");
 
 // Create product
 router.post(
@@ -122,8 +123,9 @@ router.put(
         rating,
         comment,
         productId,
+        orderId,
       };
-
+      
       const isReviewed = product.reviews.find(
         (rev) => rev.user._id === req.user._id
       );
@@ -156,7 +158,7 @@ router.put(
 
       res.status(200).json({
         success: true,
-        message: "Reviwed succesfully!",
+        message: "Reviewed successfully!",
       });
     } catch (error) {
       return next(new ErrorHandler(error, 400));

@@ -228,4 +228,30 @@ router.put(
   })
 );
 
+// Update shop avatar
+router.put(
+  "/update-shop-avatar",
+  isSeller,
+  upload.single("image"),
+  catchAsyncError(async (req, res, next) => {
+    try {
+      const existsShop = await Shop.findById(req.seller._id);
+      const existsAvatarPath = `uploads/${existsShop.avatar}`;
+      fs.unlinkSync(existsAvatarPath);
+      const fileUrl = path.join(req.file.filename);
+
+      const seller = await Shop.findByIdAndUpdate(req.seller._id, {
+        avatar: fileUrl,
+      });
+
+      res.status(200).json({
+        success: true,
+        seller,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
 module.exports = router;

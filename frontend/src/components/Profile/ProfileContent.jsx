@@ -14,8 +14,10 @@ import { RxCross1 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { getUserOrders } from "../../redux/actions/orderAction";
 import {
   deleteUserAddress,
+  loadUser,
   updateUserAddress,
   updateUserInfo,
 } from "../../redux/actions/userAction";
@@ -57,7 +59,7 @@ const ProfileContent = ({ active }) => {
       })
       .then((res) => {
         toast.success("Avatar updated successfully!");
-        window.location.reload();
+        dispatch(loadUser());
       })
       .catch((error) => {
         toast.error(error);
@@ -149,7 +151,7 @@ const ProfileContent = ({ active }) => {
         </>
       )}
 
-      {/* Order tab */}
+      {/* All Order tab */}
       {active === 2 && (
         <div>
           <AllOrders />
@@ -188,18 +190,13 @@ const ProfileContent = ({ active }) => {
 };
 
 const AllOrders = () => {
-  const orders = [
-    {
-      _id: "127123892137adhasdh218398asdy",
-      orderItems: [
-        {
-          name: "Iphone 14 pro max",
-        },
-      ],
-      totalPrice: 120,
-      orderStatus: "Processing",
-    },
-  ];
+  const dispatch = useDispatch();
+  const { orders } = useSelector((state) => state.order);
+  const { user } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(getUserOrders(user._id));
+  }, []);
 
   const columns = [
     {
@@ -215,8 +212,8 @@ const AllOrders = () => {
       flex: 0.7,
       cellClassName: (params) => {
         return params.getValue(params.id, "status") === "Delivered"
-          ? "greenColor"
-          : "redColor";
+          ? "#fff"
+          : "red";
       },
     },
     {
@@ -242,7 +239,7 @@ const AllOrders = () => {
       sortable: false,
       renderCell: (params) => {
         return (
-          <Link to={`/order/${params.id}`}>
+          <Link to={`/user/order/${params.id}`}>
             <Button>
               <AiOutlineArrowRight size={20} />
             </Button>
@@ -258,9 +255,9 @@ const AllOrders = () => {
     orders.forEach((item) => {
       row.push({
         id: item._id,
-        itemsQty: item.orderItems.length,
+        itemsQty: item.cart.length,
         total: "US $" + item.totalPrice,
-        status: item.orderStatus,
+        status: item.status,
       });
     });
 
@@ -278,18 +275,16 @@ const AllOrders = () => {
 };
 
 const AllRefundOrders = () => {
-  const orders = [
-    {
-      _id: "127123892137adhasdh218398asdy",
-      orderItems: [
-        {
-          name: "Iphone 14 pro max",
-        },
-      ],
-      totalPrice: 120,
-      orderStatus: "Processing",
-    },
-  ];
+  const dispatch = useDispatch();
+  const { orders } = useSelector((state) => state.order);
+  const { user } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(getUserOrders(user._id));
+  }, []);
+
+  const eligibleOrders =
+    orders && orders.filter((item) => item?.status === "Processing Refund");
 
   const columns = [
     {
@@ -332,7 +327,7 @@ const AllRefundOrders = () => {
       sortable: false,
       renderCell: (params) => {
         return (
-          <Link to={`/order/${params.id}`}>
+          <Link to={`/user/order/${params.id}`}>
             <Button>
               <AiOutlineArrowRight size={20} />
             </Button>
@@ -344,13 +339,13 @@ const AllRefundOrders = () => {
 
   const row = [];
 
-  orders &&
-    orders.forEach((item) => {
+  eligibleOrders &&
+    eligibleOrders.forEach((item) => {
       row.push({
         id: item._id,
-        itemsQty: item.orderItems.length,
+        itemsQty: item.cart.length,
         total: "US $" + item.totalPrice,
-        status: item.orderStatus,
+        status: item.status,
       });
     });
 
@@ -368,18 +363,13 @@ const AllRefundOrders = () => {
 };
 
 const TrackOrder = () => {
-  const orders = [
-    {
-      _id: "127123892137adhasdh218398asdy",
-      orderItems: [
-        {
-          name: "Iphone 14 pro max",
-        },
-      ],
-      totalPrice: 120,
-      orderStatus: "Processing",
-    },
-  ];
+  const dispatch = useDispatch();
+  const { orders } = useSelector((state) => state.order);
+  const { user } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(getUserOrders(user._id));
+  }, []);
 
   const columns = [
     {
@@ -416,13 +406,13 @@ const TrackOrder = () => {
     {
       field: " ",
       flex: 1,
-      minWidth: 130,
+      minWidth: 150,
       headerName: "",
       type: "number",
       sortable: false,
       renderCell: (params) => {
         return (
-          <Link to={`/order/${params.id}`}>
+          <Link to={`/user/track/order/${params.id}`}>
             <Button>
               <MdOutlineTrackChanges size={20} />
             </Button>
@@ -438,9 +428,9 @@ const TrackOrder = () => {
     orders.forEach((item) => {
       row.push({
         id: item._id,
-        itemsQty: item.orderItems.length,
+        itemsQty: item.cart.length,
         total: "US $" + item.totalPrice,
-        status: item.orderStatus,
+        status: item.status,
       });
     });
 

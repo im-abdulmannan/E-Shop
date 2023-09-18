@@ -24,17 +24,21 @@ import {
   SellerActivationPage,
   ShopCreatePage,
   ShopLoginPage,
-  SignupPage
+  SignupPage, UserOrderDetailsPage,
+  UserTrackOrderPage
 } from "./Routes/Routes";
 import {
   ShopAllCouponsPage,
   ShopAllEventPage,
+  ShopAllOrdersPage,
   ShopAllProductsPage,
+  ShopAllRefundsPage,
   ShopCreateEventPage,
   ShopCreateProductPage,
   ShopDashboardPage,
   ShopHomePage,
-  ShopPreviewPage,
+  ShopOrderDetailsPage,
+  ShopPreviewPage, ShopSettingsPage
 } from "./Routes/ShopeRoutes";
 import { getAllEvents } from "./redux/actions/eventAction";
 import { getAllProducts } from "./redux/actions/productAction";
@@ -103,6 +107,22 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/user/order/:id"
+          element={
+            <ProtectedRoute>
+              <UserOrderDetailsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/track/order/:id"
+          element={
+            <ProtectedRoute>
+              <UserTrackOrderPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/order/success" element={<OrderSuccessPage />} />
         <Route path="/shop/preview/:id" element={<ShopPreviewPage />} />
         {/* Shop Route */}
@@ -125,6 +145,14 @@ const App = () => {
           }
         />
         <Route
+          path="/dashboard-settings"
+          element={
+            <SellerProtectedRoute>
+              <ShopSettingsPage />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
           path="/dashboard-create-product"
           element={
             <SellerProtectedRoute>
@@ -137,6 +165,30 @@ const App = () => {
           element={
             <SellerProtectedRoute>
               <ShopAllProductsPage />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-orders"
+          element={
+            <SellerProtectedRoute>
+              <ShopAllOrdersPage />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-refunds"
+          element={
+            <SellerProtectedRoute>
+              <ShopAllRefundsPage />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/order/:id"
+          element={
+            <SellerProtectedRoute>
+              <ShopOrderDetailsPage />
             </SellerProtectedRoute>
           }
         />

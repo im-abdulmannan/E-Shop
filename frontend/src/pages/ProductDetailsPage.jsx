@@ -24,6 +24,8 @@ const ProductDetailsPage = () => {
       setData(data);
     }
   }, [allProducts, allEvents]);
+  
+  console.log("🚀 ~ file: ProductDetailsPage.jsx:28 ~ ProductDetailsPage ~ data:", data)
 
   return (
     <div>

@@ -16,7 +16,11 @@ const EventsPage = () => {
       ) : (
         <div>
           <Header activeHeading={4} />
+          <br />
+          <br />
           <EventCard active={true} data={allEvents && allEvents[0]} />
+          <br />
+          <br />
           <Footer />
         </div>
       )}

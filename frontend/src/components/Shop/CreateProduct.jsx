@@ -9,7 +9,7 @@ import styles from "../../styles/styles";
 
 const CreateProduct = () => {
   const { seller } = useSelector((state) => state.seller);
-  const { isLoading, success, error } = useSelector((state) => state.product);
+  const { success, error } = useSelector((state) => state.product);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -28,10 +28,10 @@ const CreateProduct = () => {
     }
     if (success) {
       toast.success("Product created successfully!");
-      navigate("/dashboard");
+      navigate("/dashboard-products");
       window.location.reload();
     }
-  }, []);
+  }, [error, success, navigate, dispatch]);
 
   const handleImageChange = (e) => {
     e.preventDefault();
