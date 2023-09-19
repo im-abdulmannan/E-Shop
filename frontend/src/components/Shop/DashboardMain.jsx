@@ -2,9 +2,9 @@ import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
 import React, { useEffect, useState } from "react";
 import {
-    AiOutlineArrowRight,
-    AiOutlineFolderAdd,
-    AiOutlineMoneyCollect,
+  AiOutlineArrowRight,
+  AiOutlineFolderAdd,
+  AiOutlineMoneyCollect,
 } from "react-icons/ai";
 import { PiShoppingBagOpenLight } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,12 +31,13 @@ const DashboardMain = () => {
     setDeliveredOrder(orderData);
   }, [dispatch]);
 
-  const totalEarningWithoutTax =
-    deliveredOrder &&
-    deliveredOrder.reduce((acc, item) => acc + item.totalPrice, 0);
+  const totalEarningWithoutTax = deliveredOrder
+    ? deliveredOrder.reduce((acc, item) => acc + item.totalPrice, 0)
+    : 0;
 
   const serviceCharge = totalEarningWithoutTax * 0.1;
-  const availableBalance = totalEarningWithoutTax - serviceCharge.toFixed(2);
+  const availableBalance =
+    (totalEarningWithoutTax - serviceCharge).toFixed(2) || 0;
 
   const columns = [
     {

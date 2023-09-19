@@ -24,7 +24,9 @@ import {
   SellerActivationPage,
   ShopCreatePage,
   ShopLoginPage,
-  SignupPage, UserOrderDetailsPage,
+  SignupPage,
+  UserInboxPage,
+  UserOrderDetailsPage,
   UserTrackOrderPage
 } from "./Routes/Routes";
 import {
@@ -37,8 +39,10 @@ import {
   ShopCreateProductPage,
   ShopDashboardPage,
   ShopHomePage,
+  ShopInboxPage,
   ShopOrderDetailsPage,
-  ShopPreviewPage, ShopSettingsPage
+  ShopPreviewPage, ShopSettingsPage,
+  ShopWithdrawPage
 } from "./Routes/ShopeRoutes";
 import { getAllEvents } from "./redux/actions/eventAction";
 import { getAllProducts } from "./redux/actions/productAction";
@@ -100,6 +104,14 @@ const App = () => {
           }
         />
         <Route
+          path="/inbox"
+          element={
+            <ProtectedRoute>
+              <UserInboxPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/checkout"
           element={
             <ProtectedRoute>
@@ -145,6 +157,14 @@ const App = () => {
           }
         />
         <Route
+          path="/dashboard-withdraw-money"
+          element={
+            <SellerProtectedRoute>
+              <ShopWithdrawPage />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
           path="/dashboard-settings"
           element={
             <SellerProtectedRoute>
@@ -173,6 +193,14 @@ const App = () => {
           element={
             <SellerProtectedRoute>
               <ShopAllOrdersPage />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-messages"
+          element={
+            <SellerProtectedRoute>
+              <ShopInboxPage />
             </SellerProtectedRoute>
           }
         />

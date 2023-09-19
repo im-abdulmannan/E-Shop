@@ -330,4 +330,21 @@ router.put(
   })
 );
 
+// Get user by Id
+router.get(
+  "/get-user-info/:id",
+  catchAsyncError(async (req, res, next) => {
+    try {
+      const user = await User.findById(req.params.id);
+
+      res.status(200).json({
+        success: true,
+        user,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
 module.exports = router;

@@ -99,7 +99,7 @@ const Header = ({ activeHeading }) => {
             ) : null}
           </div>
 
-          <Link to="/shop-create">
+          <Link to={`${isSeller ? "/dashboard" : "/shop-create"}`}>
             <div className={`${styles.button} min-w-max px-4`}>
               <h1 className="flex text-white items-center">
                 {isSeller && isSeller ? "Go to shop" : "Become a seller"}

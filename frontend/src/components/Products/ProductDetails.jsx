@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
   AiFillHeart,
@@ -14,7 +15,7 @@ import {
   addToWishlist,
   removeFromWishlist,
 } from "../../redux/actions/wishlistAction";
-import { backend_url } from "../../server";
+import { backend_url, server } from "../../server";
 import styles from "../../styles/styles";
 import Ratings from "./Ratings";
 
@@ -24,6 +25,7 @@ const ProductDetails = ({ data }) => {
   const { cart } = useSelector((state) => state.cart);
   const { wishlist } = useSelector((state) => state.wishlist);
   const { products } = useSelector((state) => state.product);
+  const { user, isAuthenticated } = useSelector((state) => state.user);
 
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
@@ -87,8 +89,27 @@ const ProductDetails = ({ data }) => {
 
   const averageRating = totalRatings / totalReviewsLength || 0;
 
-  const handleMessageSubmit = () => {
-    navigate("/inbox?conversion=5072172hasdbasks");
+  const handleMessageSubmit = async () => {
+    if (isAuthenticated) {
+      const groupTitle = data._id + user._id;
+      const userId = user._id;
+      const sellerId = data.shop._id;
+
+      await axios
+        .post(`${server}/conversation/create-new-conversation`, {
+          groupTitle,
+          userId,
+          sellerId,
+        })
+        .then((res) => {
+          navigate(`/conversation/${res.data.conversation._id}`);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+        });
+    } else {
+      toast.error("Please login to access this resource");
+    }
   };
 
   return (

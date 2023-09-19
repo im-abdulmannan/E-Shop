@@ -31,6 +31,8 @@ const event = require("./controller/eventController");
 const coupon = require("./controller/couponController");
 const payment = require("./controller/paymentController");
 const order = require("./controller/orderController");
+const conversation = require("./controller/conversationController");
+const message = require("./controller/messageController");
 
 app.use("/api/v2/user", user);
 app.use("/api/v2/product", product);
@@ -39,6 +41,8 @@ app.use("/api/v2/event", event);
 app.use("/api/v2/coupon", coupon);
 app.use("/api/v2/payment", payment);
 app.use("/api/v2/order", order);
+app.use("/api/v2/conversation", conversation);
+app.use("/api/v2/message", message);
 
 app.use(ErrorHandler);
 

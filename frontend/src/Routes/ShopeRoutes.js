@@ -7,9 +7,11 @@ import ShopCreateEventPage from "../pages/Shop/ShopCreateEventPage";
 import ShopCreateProductPage from "../pages/Shop/ShopCreateProductPage";
 import ShopDashboardPage from "../pages/Shop/ShopDashboardPage";
 import ShopHomePage from "../pages/Shop/ShopHomePage";
+import ShopInboxPage from "../pages/Shop/ShopInboxPage";
 import ShopOrderDetailsPage from "../pages/Shop/ShopOrderDetailsPage";
 import ShopPreviewPage from "../pages/Shop/ShopPreviewPage";
 import ShopSettingsPage from "../pages/Shop/ShopSettingsPage";
+import ShopWithdrawPage from "../pages/Shop/ShopWithdrawPage";
 
 export {
     ShopAllCouponsPage,
@@ -18,9 +20,10 @@ export {
     ShopAllProductsPage,
     ShopAllRefundsPage,
     ShopCreateEventPage,
-    ShopCreateProductPage, ShopDashboardPage,
-    ShopHomePage,
-    ShopOrderDetailsPage,
-    ShopPreviewPage, ShopSettingsPage
+    ShopCreateProductPage,
+    ShopDashboardPage,
+    ShopHomePage, ShopInboxPage, ShopOrderDetailsPage,
+    ShopPreviewPage,
+    ShopSettingsPage, ShopWithdrawPage
 };
 
