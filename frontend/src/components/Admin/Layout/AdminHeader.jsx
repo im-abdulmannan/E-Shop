@@ -7,8 +7,8 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { backend_url } from "../../../server";
 
-const DashboardHeader = () => {
-  const { seller } = useSelector((state) => state.seller);
+const AdminHeader = () => {
+  const { user } = useSelector((state) => state.user);
 
   return (
     <div className="w-full h-[80px] bg-white shadow sticky top-0 left-0 z-30 flex items-center justify-between px-4">
@@ -61,17 +61,15 @@ const DashboardHeader = () => {
               className="mx-5 cursor-pointer"
             />
           </Link>
-          <Link to={`/shop/${seller._id}`}>
-            <img
-              src={`${backend_url}${seller.avatar}`}
-              alt="shop-avatar"
-              className="w-[45px] h-[45px] rounded-full object-cover"
-            />
-          </Link>
+          <img
+            src={`${backend_url}${user?.avatar}`}
+            alt="shop-avatar"
+            className="w-[45px] h-[45px] rounded-full object-cover"
+          />
         </div>
       </div>
     </div>
   );
 };
 
-export default DashboardHeader;
+export default AdminHeader;

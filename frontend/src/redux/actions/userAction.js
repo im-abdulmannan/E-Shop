@@ -133,3 +133,25 @@ export const deleteUserAddress = (id) => async (dispatch) => {
     });
   }
 };
+
+// Get admin users
+export const getAdminUsers = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: "AdminUsersRequest",
+    });
+
+    const { data } = await axios.get(`${server}/user/admin-users`, {
+      withCredentials: true,
+    });
+    dispatch({
+      type: "AdminUsersSuccess",
+      payload: data.users,
+    });
+  } catch (error) {
+    dispatch({
+      type: "AdminUsersFail",
+      payload: error.response.data.message,
+    });
+  }
+};

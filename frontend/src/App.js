@@ -6,8 +6,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import AdminProtectedRoute from "./ProtectedRoutes/AdminProtectedRoute";
 import ProtectedRoute from "./ProtectedRoutes/ProtectedRoute";
 import SellerProtectedRoute from "./ProtectedRoutes/SellerProtectedRoute";
+import { AdminDashboardPage, AdminDashboardUsersPage } from "./Routes/AdminRoute";
 import {
   ActivationPage,
   BestSellingPage,
@@ -27,7 +29,7 @@ import {
   SignupPage,
   UserInboxPage,
   UserOrderDetailsPage,
-  UserTrackOrderPage
+  UserTrackOrderPage,
 } from "./Routes/Routes";
 import {
   ShopAllCouponsPage,
@@ -41,8 +43,9 @@ import {
   ShopHomePage,
   ShopInboxPage,
   ShopOrderDetailsPage,
-  ShopPreviewPage, ShopSettingsPage,
-  ShopWithdrawPage
+  ShopPreviewPage,
+  ShopSettingsPage,
+  ShopWithdrawPage,
 } from "./Routes/ShopeRoutes";
 import { getAllEvents } from "./redux/actions/eventAction";
 import { getAllProducts } from "./redux/actions/productAction";
@@ -248,7 +251,74 @@ const App = () => {
           path="/seller/activation/:activation_token"
           element={<SellerActivationPage />}
         />
+
+        {/* Admin Routes */}
+        <Route
+          path="/admin/dashboard"
+          element={
+            <AdminProtectedRoute>
+              <AdminDashboardPage />
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/dashboard-users"
+          element={
+            <AdminProtectedRoute>
+              <AdminDashboardUsersPage />
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/dashboard-products"
+          element={
+            <AdminProtectedRoute>
+              <AdminDashboardUsersPage />
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/dashboard-events"
+          element={
+            <AdminProtectedRoute>
+              <AdminDashboardUsersPage />
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/dashboard-orders"
+          element={
+            <AdminProtectedRoute>
+              <AdminDashboardUsersPage />
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/dashboard-sellers"
+          element={
+            <AdminProtectedRoute>
+              <AdminDashboardUsersPage />
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/dashboard-settings"
+          element={
+            <AdminProtectedRoute>
+              <AdminDashboardUsersPage />
+            </AdminProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/dashboard-withdraw-request"
+          element={
+            <AdminProtectedRoute>
+              <AdminDashboardUsersPage />
+            </AdminProtectedRoute>
+          }
+        />
       </Routes>
+
       <ToastContainer
         position="bottom-center"
         autoClose={5000}

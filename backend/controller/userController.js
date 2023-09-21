@@ -10,7 +10,7 @@ const jwt = require("jsonwebtoken");
 const sendMail = require("../utils/sendMail");
 const catchAsyncError = require("../middleware/catchAsyncError");
 const sendToken = require("../utils/jwtToken");
-const { isAuthenticated } = require("../middleware/auth");
+const { isAuthenticated, isAdmin } = require("../middleware/auth");
 
 // Create user
 router.post("/create-user", upload.single("file"), async (req, res, next) => {
@@ -340,6 +340,27 @@ router.get(
       res.status(200).json({
         success: true,
         user,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+// Get admin users
+router.get(
+  "/admin-users",
+  isAuthenticated,
+  isAdmin("Admin"),
+  catchAsyncError(async (req, res, next) => {
+    try {
+      const users = await User.find().sort({
+        createdAt: -1,
+      });
+
+      res.status(201).json({
+        success: true,
+        users,
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
