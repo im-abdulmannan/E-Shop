@@ -16,7 +16,7 @@ import {
   AdminDashboardProductsPage,
   AdminDashboardSellersPage,
   AdminDashboardUsersPage,
-  AdminDashboardWithdrawRequestPage
+  AdminWithdrawPage
 } from "./Routes/AdminRoute";
 import {
   ActivationPage,
@@ -321,7 +321,7 @@ const App = () => {
           path="/admin/dashboard-withdraw-request"
           element={
             <AdminProtectedRoute>
-              <AdminDashboardWithdrawRequestPage />
+              <AdminWithdrawPage />
             </AdminProtectedRoute>
           }
         />

@@ -19,6 +19,10 @@ const AdminHero = () => {
     dispatch(getAdminSellers());
   }, []);
 
+  const adminEarning =
+    adminOrders &&
+    adminOrders.reduce((acc, item) => acc + item.totalPrice * 0.1, 0);
+
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
 
@@ -91,7 +95,9 @@ const AdminHero = () => {
                   Total Earning
                 </h3>
               </div>
-              <h5 className="pt-2 pl-[36px] text-[22px] font-[500]">$1200</h5>
+              <h5 className="pt-2 pl-[36px] text-[22px] font-[500]">
+                ${adminEarning?.toFixed(2)}
+              </h5>
             </div>
 
             <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-white shadow rounded px-2 py-5">

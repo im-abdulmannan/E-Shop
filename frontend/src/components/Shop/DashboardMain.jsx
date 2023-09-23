@@ -1,6 +1,6 @@
 import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   AiOutlineArrowRight,
   AiOutlineFolderAdd,
@@ -15,29 +15,15 @@ import styles from "../../styles/styles";
 
 const DashboardMain = () => {
   const dispatch = useDispatch();
-  const { seller } = useSelector((state) => state.seller);
   const { orders } = useSelector((state) => state.order);
   const { products } = useSelector((state) => state.product);
-
-  const [deliveredOrder, setDeliveredOrder] = useState(null);
+  const { seller } = useSelector((state) => state.seller);
+  const availableBalance = seller?.availableBalance.toFixed(2);
 
   useEffect(() => {
     dispatch(getShopOrders(seller._id));
     dispatch(getAllShopProducts(seller._id));
-
-    const orderData =
-      orders && orders.filter((item) => item.status == "Delivered");
-
-    setDeliveredOrder(orderData);
   }, [dispatch]);
-
-  const totalEarningWithoutTax = deliveredOrder
-    ? deliveredOrder.reduce((acc, item) => acc + item.totalPrice, 0)
-    : 0;
-
-  const serviceCharge = totalEarningWithoutTax * 0.1;
-  const availableBalance =
-    (totalEarningWithoutTax - serviceCharge).toFixed(2) || 0;
 
   const columns = [
     {

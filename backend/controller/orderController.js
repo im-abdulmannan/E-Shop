@@ -5,6 +5,7 @@ const router = express.Router();
 const catchAsyncError = require("../middleware/catchAsyncError");
 const ErrorHandler = require("../utils/ErrorHandler");
 const { isSeller, isAuthenticated, isAdmin } = require("../middleware/auth");
+const Shop = require("../model/shopModel");
 
 // Create new order
 router.post(
@@ -104,6 +105,8 @@ router.put(
       if (req.body.status === "Delivered") {
         order.deliveredAt = Date.now();
         order.paymentInfo.status = "Succeeded";
+        const serviceCharges = order.totalPrice * 0.1;
+        await updateSellerInfo(order.totalPrice - serviceCharges);
       }
 
       await order.save({ validateBeforeSave: false });
@@ -120,6 +123,12 @@ router.put(
         product.sold_out += qty;
 
         product.save({ validateBeforeSave: false });
+      }
+
+      async function updateSellerInfo(amount) {
+        const seller = await Shop.findById(req.seller.id);
+        seller.availableBalance += amount;
+        await seller.save();
       }
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
