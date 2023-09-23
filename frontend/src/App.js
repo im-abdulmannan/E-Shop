@@ -9,7 +9,15 @@ import "./App.css";
 import AdminProtectedRoute from "./ProtectedRoutes/AdminProtectedRoute";
 import ProtectedRoute from "./ProtectedRoutes/ProtectedRoute";
 import SellerProtectedRoute from "./ProtectedRoutes/SellerProtectedRoute";
-import { AdminDashboardPage, AdminDashboardUsersPage } from "./Routes/AdminRoute";
+import {
+  AdminDashboardEventsPage,
+  AdminDashboardOrdersPage,
+  AdminDashboardPage,
+  AdminDashboardProductsPage,
+  AdminDashboardSellersPage,
+  AdminDashboardUsersPage,
+  AdminDashboardWithdrawRequestPage
+} from "./Routes/AdminRoute";
 import {
   ActivationPage,
   BestSellingPage,
@@ -273,7 +281,7 @@ const App = () => {
           path="/admin/dashboard-products"
           element={
             <AdminProtectedRoute>
-              <AdminDashboardUsersPage />
+              <AdminDashboardProductsPage />
             </AdminProtectedRoute>
           }
         />
@@ -281,7 +289,7 @@ const App = () => {
           path="/admin/dashboard-events"
           element={
             <AdminProtectedRoute>
-              <AdminDashboardUsersPage />
+              <AdminDashboardEventsPage />
             </AdminProtectedRoute>
           }
         />
@@ -289,7 +297,7 @@ const App = () => {
           path="/admin/dashboard-orders"
           element={
             <AdminProtectedRoute>
-              <AdminDashboardUsersPage />
+              <AdminDashboardOrdersPage />
             </AdminProtectedRoute>
           }
         />
@@ -297,7 +305,7 @@ const App = () => {
           path="/admin/dashboard-sellers"
           element={
             <AdminProtectedRoute>
-              <AdminDashboardUsersPage />
+              <AdminDashboardSellersPage />
             </AdminProtectedRoute>
           }
         />
@@ -313,7 +321,7 @@ const App = () => {
           path="/admin/dashboard-withdraw-request"
           element={
             <AdminProtectedRoute>
-              <AdminDashboardUsersPage />
+              <AdminDashboardWithdrawRequestPage />
             </AdminProtectedRoute>
           }
         />

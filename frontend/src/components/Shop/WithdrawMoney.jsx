@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { RxCross1 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { getShopOrders } from "../../redux/actions/orderAction";
 import styles from "../../styles/styles";
@@ -8,7 +9,9 @@ const WithdrawMoney = () => {
   const { seller } = useSelector((state) => state.seller);
   const { orders } = useSelector((state) => state.order);
 
+  const [open, setOpen] = useState(false);
   const [deliveredOrder, setDeliveredOrder] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState(false);
 
   useEffect(() => {
     dispatch(getShopOrders(seller._id));
@@ -33,11 +36,12 @@ const WithdrawMoney = () => {
         </h5>
         <div
           className={`${styles.button} text-white !h-[42px] !rounded`}
+          onClick={() => setOpen(true)}
         >
           Withdraw
         </div>
       </div>
-      {/* {open && (
+      {open && (
         <div className="w-full h-screen z-[9999] fixed top-0 left-0 flex items-center justify-center bg-[#0000004e]">
           <div
             className={`w-[95%] 800px:w-[50%] bg-white shadow rounded ${
@@ -51,7 +55,7 @@ const WithdrawMoney = () => {
                 className="cursor-pointer"
               />
             </div>
-            {paymentMethod ? (
+            {/* {paymentMethod ? (
               <div>
                 <h3 className="text-[22px] font-Poppins text-center font-[600]">
                   Add new Withdraw Method:
@@ -248,10 +252,13 @@ const WithdrawMoney = () => {
                   </div>
                 )}
               </>
-            )} 
+            )}  */}
+            <h3 className="text-[22px] font-Poppins">
+              Available Payment Methods
+            </h3>
           </div>
         </div>
-      )} */}
+      )}
     </div>
   );
 };

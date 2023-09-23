@@ -59,6 +59,19 @@ export const productReducer = createReducer(initialState, {
     state.error = action.payload;
   },
 
+  // Get all admin products
+  AdminProductsRequest: (state) => {
+    state.isLoading = true;
+  },
+  AdminProductsSuccess: (state, action) => {
+    state.isLoading = false;
+    state.adminProducts = action.payload;
+  },
+  AdminProductsFail: (state, action) => {
+    state.isLoading = false;
+    state.error = action.payload;
+  },
+
   // Clear Error
   clearError: (state) => {
     state.error = null;

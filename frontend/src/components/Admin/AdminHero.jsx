@@ -63,7 +63,7 @@ const AdminHero = () => {
     adminOrders.forEach((item) => {
       row.push({
         id: item._id,
-        itemsQty: item.cart.length,
+        itemsQty: item?.cart?.reduce((acc, item) => acc + item.qty, 0),
         total: item?.totalPrice + " $",
         status: item?.status,
         createdAt: item?.createdAt.slice(0, 10),

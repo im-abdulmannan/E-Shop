@@ -4,7 +4,7 @@ const router = express.Router();
 const catchAsyncError = require("../middleware/catchAsyncError");
 const Shop = require("../model/shopModel");
 const { upload } = require("../multer");
-const { isSeller, isAuthenticated } = require("../middleware/auth");
+const { isSeller, isAuthenticated, isAdmin } = require("../middleware/auth");
 const ErrorHandler = require("../utils/ErrorHandler");
 const Product = require("../model/productModel");
 const Order = require("../model/orderModel");
@@ -125,7 +125,7 @@ router.put(
         productId,
         orderId,
       };
-      
+
       const isReviewed = product.reviews.find(
         (rev) => rev.user._id === req.user._id
       );
@@ -162,6 +162,27 @@ router.put(
       });
     } catch (error) {
       return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+
+// Get admin products
+router.get(
+  "/admin-products",
+  isAuthenticated,
+  isAdmin("Admin"),
+  catchAsyncError(async (req, res, next) => {
+    try {
+      const products = await Product.find().sort({
+        createdAt: -1,
+      });
+
+      res.status(201).json({
+        success: true,
+        products,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 400));
     }
   })
 );
