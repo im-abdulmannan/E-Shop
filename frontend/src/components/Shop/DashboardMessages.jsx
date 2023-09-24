@@ -8,7 +8,7 @@ import socketIO from "socket.io-client";
 import { format } from "timeago.js";
 import { backend_url, server } from "../../server";
 import styles from "../../styles/styles";
-const ENDPOINT = "http://localhost:5000/";
+const ENDPOINT = "https://e-shop-5iib.vercel.app/";
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
 const DashboardMessages = () => {
