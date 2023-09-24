@@ -51,6 +51,11 @@ const Header = ({ activeHeading }) => {
     }
   });
 
+  const crossSearchHandler = () => {
+    setSearchData(null);
+    setSearchTerm("");
+  };
+
   return (
     <>
       <div className={`${styles.section}`}>
@@ -72,31 +77,35 @@ const Header = ({ activeHeading }) => {
               onChange={handleSearchChange}
               className="h-[40px] w-full px-2 border-[#3957db] border-[2px] rounded-md"
             />
-            <AiOutlineSearch
-              size={30}
-              className="absolute right-2 top-1.5 cursor-pointer"
-            />
-            {searchData && searchData.length !== 0 ? (
-              <div className="absolute min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4">
-                {searchData &&
-                  searchData.map((i, index) => {
-                    const d = i.name;
 
-                    return (
-                      <Link to={`/product/${i._id}`}>
-                        <div className="w-full flex items-start-py-3">
-                          <img
-                            src={`${backend_url}${i.images[0]}`}
-                            alt=""
-                            className="w-[40px] h-[40px] mr-[10px]"
-                          />
-                          <h1>{i.name}</h1>
-                        </div>
-                      </Link>
-                    );
-                  })}
+            {searchData && searchData.length !== 0 ? (
+              <>
+                <div className="flex absolute right-2 top-1.5 cursor-pointer gap-3">
+                  <RxCross1 size={25} onClick={crossSearchHandler} />
+                </div>
+                <div className="absolute min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4 w-full">
+                  {searchData &&
+                    searchData.map((i, index) => {
+                      return (
+                        <Link to={`/product/${i._id}`}>
+                          <div className="w-full flex items-start-py-3">
+                            <img
+                              src={`${backend_url}${i.images[0]}`}
+                              alt=""
+                              className="w-[40px] h-[40px] mr-[10px]"
+                            />
+                            <h1>{i.name}</h1>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                </div>
+              </>
+            ) : (
+              <div className="flex absolute right-2 top-1.5 cursor-pointer gap-3">
+                <AiOutlineSearch size={25} />
               </div>
-            ) : null}
+            )}
           </div>
 
           <Link to={`${isSeller ? "/dashboard" : "/shop-create"}`}>
@@ -238,7 +247,11 @@ const Header = ({ activeHeading }) => {
           </div>
           <div>
             <div className="relative mr-[20px]">
-              <AiOutlineShoppingCart size={30} className="cursor-pointer" />
+              <AiOutlineShoppingCart
+                size={30}
+                className="cursor-pointer"
+                onClick={() => setOpenCart(true)}
+              />
               <span
                 className={`${
                   cart.length === 0 ? "hidden" : null
@@ -248,6 +261,9 @@ const Header = ({ activeHeading }) => {
               </span>
             </div>
           </div>
+
+          {openCart && <Cart setOpenCart={setOpenCart} />}
+          {openWishlist && <Wishlist setOpenWishlist={setOpenWishlist} />}
         </div>
 
         {/* Header Sidebar */}
@@ -262,6 +278,7 @@ const Header = ({ activeHeading }) => {
                     <AiOutlineHeart
                       size={30}
                       className="mt-5 ml-3 cursor-pointer"
+                      onClick={() => setOpenWishlist(true) || setOpen(false)}
                     />
                     <span
                       className={`${
@@ -288,16 +305,14 @@ const Header = ({ activeHeading }) => {
                   onChange={handleSearchChange}
                 />
                 {searchData && searchData.length !== 0 ? (
-                  <div className="absolute bg-slate-50 shadow-sm-2 z-[9] p-4">
+                  <div className="absolute bg-slate-100 shadow-sm-5 z-[9] p-4 w-full">
                     {searchData &&
                       searchData.map((i, index) => {
-                        const d = i.name;
-
                         return (
                           <Link to={`/product/${i._id}`}>
                             <div className="w-full flex items-start-py-3">
                               <img
-                                src={i.image_Url[0].url}
+                                src={`${backend_url}/${i.images[0]}`}
                                 alt=""
                                 className="w-[40px] h-[40px] mr-[10px]"
                               />

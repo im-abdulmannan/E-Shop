@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineArrowRight, AiOutlineSend } from "react-icons/ai";
 import { TfiGallery } from "react-icons/tfi";
 import { useSelector } from "react-redux";
@@ -13,6 +13,7 @@ const ENDPOINT = "http://localhost:5000/";
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
 const UserInboxPage = () => {
+  const scrollRef = useRef(null);
   const { user } = useSelector((state) => state.user);
 
   const [conversations, setConversations] = useState([]);
@@ -21,6 +22,7 @@ const UserInboxPage = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [userData, setUserData] = useState(null);
+  const [images, setImages] = useState();
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [activeStatus, setActiveStatus] = useState(false);
   const [open, setOpen] = useState(false);
@@ -145,6 +147,56 @@ const UserInboxPage = () => {
       });
   };
 
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    setImages(file);
+    imageSendHandling(file);
+  };
+
+  const imageSendHandling = async (e) => {
+    const newForm = new FormData();
+    newForm.append("images", e);
+    newForm.append("sender", user._id);
+    newForm.append("text", newMessage);
+    newForm.append("conversationId", currentChat._id);
+
+    const receiverId = currentChat.members.find(
+      (member) => member !== user._id
+    );
+
+    socketId.emit("sendMessage", {
+      senderId: user._id,
+      receiverId,
+      images: e,
+    });
+
+    try {
+      await axios
+        .post(`${server}/message/create-new-message`, newForm)
+        .then((res) => {
+          setImages();
+          setMessages([...messages, res.data.message]);
+          updateLastMessageForImage();
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateLastMessageForImage = async () => {
+    await axios.put(
+      `${server}/conversation/update-last-message/${currentChat._id}`,
+      {
+        lastMessage: "Photo",
+        lastMessageId: user._id,
+      }
+    );
+  };
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ beahaviour: "smooth" });
+  }, [messages]);
+
   return (
     <div className="w-full">
       {!open && (
@@ -164,7 +216,6 @@ const UserInboxPage = () => {
                 setCurrentChat={setCurrentChat}
                 me={user?._id}
                 setUserData={setUserData}
-                userData={userData}
                 online={onlineCheck(item)}
                 setActiveStatus={setActiveStatus}
               />
@@ -182,6 +233,8 @@ const UserInboxPage = () => {
           sellerId={user._id}
           userData={userData}
           activeStatus={activeStatus}
+          handleImageUpload={handleImageUpload}
+          scrollRef={scrollRef}
         />
       )}
     </div>
@@ -195,7 +248,6 @@ const MessageList = ({
   setCurrentChat,
   me,
   setUserData,
-  userData,
   online,
   setActiveStatus,
 }) => {
@@ -252,7 +304,7 @@ const MessageList = ({
         <p className="text-[16px] text-[#000c]">
           {data.lastMessageId !== user?._id
             ? "You: "
-            : user.name.split(" ")[0] + ": "}
+            : user?.name.split(" ")[0] + ": "}
           {data?.lastMessage}
         </p>
       </div>
@@ -269,6 +321,8 @@ const SellerInbox = ({
   sellerId,
   userData,
   activeStatus,
+  handleImageUpload,
+  scrollRef,
 }) => {
   return (
     <div className="w-[full] min-h-full flex flex-col justify-between p-5">
@@ -300,6 +354,7 @@ const SellerInbox = ({
               className={`flex w-full my-2 ${
                 item.sender === sellerId ? "justify-end" : "justify-start"
               }`}
+              ref={scrollRef}
             >
               {item.sender !== sellerId && (
                 <img
@@ -308,27 +363,29 @@ const SellerInbox = ({
                   alt=""
                 />
               )}
-              {/* {item.images && (
-                <img
-                  src={`${item.images?.url}`}
-                  className="w-[300px] h-[300px] object-cover rounded-[10px] ml-2 mb-2"
-                />
-              )} */}
-              {item.text !== "" && (
-                <div>
-                  <div
-                    className={`w-max p-2 rounded ${
-                      item.sender === sellerId ? "bg-[#000]" : "bg-[#38c776]"
-                    } text-[#fff] h-min`}
-                  >
-                    <p>{item.text}</p>
-                  </div>
+              <div className="flex flex-col">
+                {item.images && (
+                  <img
+                    src={`${backend_url}/${item.images}`}
+                    className="w-[300px] h-[300px] object-cover rounded-[10px] ml-2 mb-2"
+                  />
+                )}
+                {item.text !== "" && (
+                  <div>
+                    <div
+                      className={`w-max p-2 rounded ${
+                        item.sender === sellerId ? "bg-[#000]" : "bg-[#38c776]"
+                      } text-[#fff] h-min`}
+                    >
+                      <p>{item.text}</p>
+                    </div>
 
-                  <p className="text-[12px] text-[#000000d3] pt-1">
-                    {format(item.createdAt)}
-                  </p>
-                </div>
-              )}
+                    <p className="text-[12px] text-[#000000d3] pt-1">
+                      {format(item.createdAt)}
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           ))}
       </div>
@@ -345,7 +402,7 @@ const SellerInbox = ({
             name=""
             id="image"
             className="hidden"
-            // onChange={handleImageUpload}
+            onChange={handleImageUpload}
           />
           <label htmlFor="image">
             <TfiGallery className="cursor-pointer" size={20} />

@@ -20,7 +20,13 @@ const Events = () => {
             </div>
 
             <div className="w-full grid">
-              <EventCard data={allEvents && allEvents[0]} />
+              {allEvents !== 0 ? (
+                <EventCard data={allEvents && allEvents[0]} />
+              ) : (
+                <p className="text-[#000000b1] flex justify-center items-center mb-7">
+                  Currently no event has occurred!
+                </p>
+              )}
             </div>
           </div>
         </div>

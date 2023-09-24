@@ -34,7 +34,7 @@ const shopSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    required: [true, "Please enter your image"],
+    required: true,
   },
   zipCode: {
     type: Number,

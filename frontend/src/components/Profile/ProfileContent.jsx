@@ -67,7 +67,7 @@ const ProfileContent = ({ active }) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full pt-16">
       {/* Profile tab */}
       {active === 1 && (
         <>

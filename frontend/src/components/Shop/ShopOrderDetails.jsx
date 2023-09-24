@@ -179,21 +179,24 @@ const ShopOrderDetails = () => {
             </select>
           )}
 
-        <select
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
-          className="p-2 w-[200px]"
-        >
-          {["Processing Refund", "Refund Success"]
-            .slice(
-              ["Processing Refund", "Refund Success"].indexOf(data?.status)
-            )
-            .map((option, index) => (
-              <option value={option} key={index}>
-                {option}
-              </option>
-            ))}
-        </select>
+        {data?.status === "Processing Refund" ||
+          (data?.status === "Refund Success" && (
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              className="p-2 w-[200px]"
+            >
+              {["Processing Refund", "Refund Success"]
+                .slice(
+                  ["Processing Refund", "Refund Success"].indexOf(data?.status)
+                )
+                .map((option, index) => (
+                  <option value={option} key={index}>
+                    {option}
+                  </option>
+                ))}
+            </select>
+          ))}
       </div>
 
       <div

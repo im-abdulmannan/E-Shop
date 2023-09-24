@@ -102,7 +102,7 @@ const ProductDetails = ({ data }) => {
           sellerId,
         })
         .then((res) => {
-          navigate(`/conversation/${res.data.conversation._id}`);
+          navigate(`/inbox?${res.data.conversation._id}`);
         })
         .catch((error) => {
           toast.error(error.response.data.message);
@@ -111,6 +111,11 @@ const ProductDetails = ({ data }) => {
       toast.error("Please login to access this resource");
     }
   };
+
+  console.log(
+    "🚀 ~ file: ProductDetails.jsx:116 ~ ProductDetails ~ data:",
+    data
+  );
 
   return (
     <div className="bg-white">
@@ -177,7 +182,7 @@ const ProductDetails = ({ data }) => {
                     {click ? (
                       <AiFillHeart
                         size={30}
-                        className=" cursor-pointer"
+                        className="cursor-pointer"
                         onClick={() => removeFromWishlistHandler(data)}
                         color={click ? "red" : "#333"}
                         title="Remove from wishlist"
