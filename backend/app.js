@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // config
 if (process.env.NODE_ENV !== "PRODUCTION") {
   require("dotenv").config({
-    path: "backend/config/.env",
+    path: "config/.env",
   });
 }
 
