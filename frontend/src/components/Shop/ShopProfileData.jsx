@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import { format } from "timeago.js";
 import { getAllShopEvents } from "../../redux/actions/eventAction";
 import { getAllShopProducts } from "../../redux/actions/productAction";
 import { backend_url } from "../../server";
@@ -19,8 +20,8 @@ const ShopProfileData = ({ isOwner }) => {
 
   useEffect(() => {
     dispatch(getAllShopProducts(id));
-    dispatch(getAllShopEvents(seller._id));
-  }, []);
+    dispatch(getAllShopEvents(seller && seller._id));
+  }, [dispatch, seller, id]);
 
   const allReviews =
     products && products.map((product) => product.reviews).flat();
@@ -113,7 +114,9 @@ const ShopProfileData = ({ isOwner }) => {
                   <p className="text-[#000000a9] text-[16px]">
                     {item?.comment}
                   </p>
-                  <p className="text-[#00000099] text-[12px]">{"2 days ago"}</p>
+                  <p className="text-[#00000099] text-[12px]">
+                    {format(item.createdAt)}
+                  </p>
                 </div>
               </div>
             ))}

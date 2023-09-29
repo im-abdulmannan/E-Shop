@@ -8,7 +8,6 @@ import Loader from "../components/Layout/Loader";
 const EventsPage = () => {
   const { allEvents, isLoading } = useSelector((state) => state.event);
 
-  console.log(allEvents);
   return (
     <>
       {isLoading ? (
@@ -18,7 +17,16 @@ const EventsPage = () => {
           <Header activeHeading={4} />
           <br />
           <br />
-          <EventCard active={true} data={allEvents && allEvents[0]} />
+          {allEvents.length !== 0 ? (
+            <EventCard active={true} data={allEvents && allEvents[0]} />
+          ) : (
+            <div className="h-[50vh] flex items-center justify-center">
+              <p className="text-[#000000b1] font-[500]">
+                There are no ongoing events at the moment; please try again at a
+                later time.
+              </p>
+            </div>
+          )}
           <br />
           <br />
           <Footer />

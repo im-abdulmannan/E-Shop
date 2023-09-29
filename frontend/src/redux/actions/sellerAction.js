@@ -18,7 +18,7 @@ export const getAdminSellers = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "AdminSellersFail",
-      payload: error.response.data.message,
+      payload: error.message,
     });
   }
 };

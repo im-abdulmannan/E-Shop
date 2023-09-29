@@ -15,7 +15,7 @@ const ShopAllOrders = () => {
 
   useEffect(() => {
     dispatch(getShopOrders(seller._id));
-  }, [dispatch]);
+  }, [dispatch, seller]);
 
   const columns = [
     {
@@ -30,9 +30,10 @@ const ShopAllOrders = () => {
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
-          ? "greenColor"
-          : "redColor";
+        const status = params.row.status;
+        return status === "Delivered" || status === "Refund Success"
+          ? "text-green-600"
+          : "text-red-600";
       },
     },
     {

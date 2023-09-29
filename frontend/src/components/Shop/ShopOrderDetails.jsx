@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BsFillBagFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getShopOrders } from "../../redux/actions/orderAction";
 import { backend_url, server } from "../../server";
@@ -10,16 +10,15 @@ import styles from "../../styles/styles";
 
 const ShopOrderDetails = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { id } = useParams();
-  const { orders, isLoading } = useSelector((state) => state.order);
+  const { orders } = useSelector((state) => state.order);
   const { seller } = useSelector((state) => state.seller);
 
   const [status, setStatus] = useState("");
 
   useEffect(() => {
     dispatch(getShopOrders(seller._id));
-  }, [dispatch]);
+  }, [dispatch, seller]);
 
   const data = orders && orders.find((item) => item._id === id);
 

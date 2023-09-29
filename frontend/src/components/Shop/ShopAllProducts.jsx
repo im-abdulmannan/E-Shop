@@ -18,7 +18,7 @@ const ShopAllProducts = () => {
 
   useEffect(() => {
     dispatch(getAllShopProducts(seller._id));
-  }, [dispatch]);
+  }, [dispatch, seller]);
 
   const handleDelete = (id) => {
     dispatch(deleteShopProduct(id));
@@ -70,18 +70,17 @@ const ShopAllProducts = () => {
   ];
 
   const rows = [];
-  {
-    products &&
-      products.forEach((item) => {
-        rows.push({
-          id: item._id,
-          name: item.name,
-          price: "US$ " + item.discountPrice,
-          stock: item.stock,
-          sold: item?.sold_out,
-        });
+
+  products &&
+    products.forEach((item) => {
+      rows.push({
+        id: item._id,
+        name: item.name,
+        price: "US$ " + item.discountPrice,
+        stock: item.stock,
+        sold: item?.sold_out,
       });
-  }
+    });
 
   return (
     <>

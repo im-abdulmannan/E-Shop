@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
   AiFillHeart,
@@ -7,25 +8,48 @@ import {
 } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { addToCart } from "../../../redux/actions/cartAction";
 import {
   addToWishlist,
   removeFromWishlist,
 } from "../../../redux/actions/wishlistAction";
-import { backend_url } from "../../../server";
+import { backend_url, server } from "../../../server";
 import styles from "../../../styles/styles";
 
 const ProductCardDetails = ({ setOpen, data }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, isAuthenticated } = useSelector((state) => state.user);
   const { cart } = useSelector((state) => state.cart);
   const { wishlist } = useSelector((state) => state.wishlist);
 
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
-  // const [select, setSelect] = useState(false);
 
-  const handleMessageSubmit = () => {};
+  const handleMessageSubmit = async () => {
+    if (isAuthenticated) {
+      const groupTitle = data._id + user._id;
+      const userId = user._id;
+      const sellerId = data.shop._id;
+
+      await axios
+        .post(`${server}/conversation/create-new-conversation`, {
+          groupTitle,
+          userId,
+          sellerId,
+        })
+        .then((res) => {
+          navigate(`/inbox?${res.data.conversation._id}`);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+        });
+    } else {
+      toast.error("Please login to access this resource");
+    }
+  };
 
   const decrementCount = () => {
     if (count > 1) {
@@ -70,13 +94,15 @@ const ProductCardDetails = ({ setOpen, data }) => {
     dispatch(addToWishlist(data));
   };
 
+  console.log(data);
+
   return (
     <div className="bg-[#fff]">
       {data ? (
         <div className="fixed w-full h-screen top-0 left-0 bg-[#00000030] z-40 flex items-center justify-center">
           <div className="w-[90%] 800px:w-[60%] h-[90vh] overflow-y-scroll 800px:h-[75vh] bg-white rounded-md shadow-sm relative p-4">
             <RxCross1
-              size={30}
+              size={20}
               className="absolute right-3 top-3 z-50"
               onClick={() => setOpen(false)}
             />
@@ -91,11 +117,13 @@ const ProductCardDetails = ({ setOpen, data }) => {
                   <img
                     src={`${backend_url}${data.shop.avatar}`}
                     alt=""
-                    className="w-[50px] h-[50px] rounded-full mr-2"
+                    className="w-[50px] h-[50px] mt-5 rounded-full mr-2"
                   />
                   <div>
                     <h3 className={`${styles.shop_name}`}>{data.shop.name}</h3>
-                    <h5 className="pb-3 text-[15px]">(4/5) Ratings</h5>
+                    <h5 className="pb-3 text-[15px]">
+                      ({data.ratings}/5) Ratings
+                    </h5>
                   </div>
                 </div>
 

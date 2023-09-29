@@ -31,7 +31,7 @@ const Wishlist = ({ setOpenWishlist }) => {
           <div className="w-full h-screen flex items-center justify-center">
             <div className="flex w-full justify-end pt-5 pr-5 fixed top-3 right-3">
               <RxCross1
-                size={25}
+                size={20}
                 className="cursor-pointer"
                 onClick={() => setOpenWishlist(false)}
               />
@@ -62,7 +62,7 @@ const Wishlist = ({ setOpenWishlist }) => {
               <div className="w-full border-t">
                 {wishlist &&
                   wishlist.map((i, index) => (
-                    <SingleCart
+                    <SingleWishlist
                       key={index}
                       data={i}
                       removeFromWishlistHandler={removeFromWishlistHandler}
@@ -78,7 +78,7 @@ const Wishlist = ({ setOpenWishlist }) => {
   );
 };
 
-const SingleCart = ({ data, removeFromWishlistHandler, addToCartHandler }) => {
+const SingleWishlist = ({ data, removeFromWishlistHandler, addToCartHandler }) => {
   const [value, setValue] = useState(1);
   const totalPrice = data.discountPrice * value;
 
@@ -93,7 +93,7 @@ const SingleCart = ({ data, removeFromWishlistHandler, addToCartHandler }) => {
         <img
           src={`${backend_url}${data.images[0]}`}
           alt=""
-          className="w-[130px] h-min ml-2 mr-2 rounded-[5px]"
+          className="w-[50px] h-[50px] object-cover ml-2 mr-2 rounded-full"
         />
 
         <div className="pl-[5px]">

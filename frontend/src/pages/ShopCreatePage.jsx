@@ -11,7 +11,7 @@ const ShopCreatePage = () => {
     if (isSeller) {
       navigate(`/shop/${seller._id}`);
     }
-  }, []);
+  }, [navigate, isSeller, seller]);
 
   return (
     <div>

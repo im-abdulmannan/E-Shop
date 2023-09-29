@@ -49,11 +49,9 @@ const AdminWithdraw = () => {
       minWidth: 80,
       flex: 0.5,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Succeed"
-          ? "text-green-500"
-          : "text-red-500";
+        const status = params.row.status;
+        return status === "Succeed" ? "text-green-600" : "text-red-600";
       },
-
     },
     {
       field: "createdAt",

@@ -18,7 +18,7 @@ export const getUserOrders = (userId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "GetUserOrdersFail",
-      payload: error.response.data.message,
+      payload: error.message,
     });
   }
 };
@@ -40,7 +40,7 @@ export const getShopOrders = (shopId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "GetShopOrdersFail",
-      payload: error.response.data.message,
+      payload: error.message,
     });
   }
 };
@@ -62,7 +62,7 @@ export const getAdminOrders = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "AdminOrdersFail",
-      payload: error.response.data.message,
+      payload: error.message,
     });
   }
 };

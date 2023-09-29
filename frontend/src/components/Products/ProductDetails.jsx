@@ -112,11 +112,6 @@ const ProductDetails = ({ data }) => {
     }
   };
 
-  console.log(
-    "🚀 ~ file: ProductDetails.jsx:116 ~ ProductDetails ~ data:",
-    data
-  );
-
   return (
     <div className="bg-white">
       {data ? (
@@ -124,23 +119,21 @@ const ProductDetails = ({ data }) => {
           <div className="w-full py-5">
             <div className="block w-full 800px:flex">
               <div className="w-full 800px:w-[50%]">
-                <img
-                  src={`${backend_url}${data?.images[0]}`}
-                  alt=""
-                  className="w-[80%]"
-                />
-                <div className="w-full flex">
+                <div>
+                  <img
+                    src={`${backend_url}${data?.images[select]}`}
+                    alt=""
+                    className="w-[450px] h-[450px] object-contain"
+                  />
+                </div>
+                <div className="w-full flex flex-wrap gap-3">
                   {data &&
-                    data.images.map((i, index) => (
-                      <div
-                        className={`${
-                          select === 0 ? "border" : "null"
-                        } cursor-pointer`}
-                      >
+                    data?.images?.map((i, index) => (
+                      <div className={`cursor-pointer`}>
                         <img
                           src={`${backend_url}${i}`}
                           alt=""
-                          className="h-[200px] overflow-hidden mr-3 mt-3"
+                          className=" w-[100px] h-[100px] rounded-md object-cover overflow-hidden gap-8 mt-3"
                           onClick={() => setSelect(index)}
                         />
                       </div>

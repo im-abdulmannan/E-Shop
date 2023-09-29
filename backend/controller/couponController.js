@@ -31,7 +31,7 @@ router.post(
 
 // Get all coupons of a shop
 router.get(
-  "/get-shop-coupon/:id",
+  "/get-shop-coupons/:id",
   isSeller,
   catchAsyncError(async (req, res, next) => {
     try {

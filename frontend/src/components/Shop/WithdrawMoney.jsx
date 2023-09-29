@@ -28,7 +28,7 @@ const WithdrawMoney = () => {
 
   useEffect(() => {
     dispatch(getShopOrders(seller._id));
-  }, [dispatch]);
+  }, [dispatch, seller]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

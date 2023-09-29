@@ -18,7 +18,7 @@ const ShopAllEvents = () => {
 
   useEffect(() => {
     dispatch(getAllShopEvents(seller._id));
-  }, [dispatch]);
+  }, [dispatch, seller]);
 
   const handleDelete = (id) => {
     dispatch(deleteShopEvent(id));
@@ -27,9 +27,9 @@ const ShopAllEvents = () => {
 
   const columns = [
     { field: "id", headerName: "Product id", minWidth: 150, flex: 0.7 },
-    { field: "name", headerName: "Name", minWidth: 120, flex: 1.1 },
+    { field: "name", headerName: "Name", minWidth: 110, flex: 1.0 },
     { field: "price", headerName: "Price", minWidth: 100, flex: 0.6 },
-    { field: "stock", headerName: "Stock", minWidth: 80, flex: 0.5 },
+    { field: "stock", headerName: "Stock", minWidth: 100, flex: 0.6 },
     { field: "sold", headerName: "Sold out", minWidth: 130, flex: 0.6 },
     {
       field: "Preview",
@@ -39,11 +39,9 @@ const ShopAllEvents = () => {
       type: "number",
       sortable: false,
       renderCell: (params) => {
-        const d = params.row.name;
-        const event_name = d.replace(/\s+/g, "-");
         return (
           <>
-            <Link to={`/event/${event_name}`}>
+            <Link to={`/event/${params.id}`}>
               <Button>
                 <AiOutlineEye size={20} />
               </Button>
@@ -72,18 +70,17 @@ const ShopAllEvents = () => {
   ];
 
   const rows = [];
-  {
-    events &&
-      events.forEach((item) => {
-        rows.push({
-          id: item._id,
-          name: item.name,
-          price: "US$ " + item.discountPrice,
-          stock: item.stock,
-          sold: item?.sold_out,
-        });
+
+  events &&
+    events.forEach((item) => {
+      rows.push({
+        id: item._id,
+        name: item.name,
+        price: "US$ " + item.discountPrice,
+        stock: item.stock,
+        sold: item?.sold_out,
       });
-  }
+    });
 
   return (
     <>

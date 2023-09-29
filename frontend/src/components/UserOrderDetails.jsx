@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { AiFillStar, AiOutlineMessage, AiOutlineStar } from "react-icons/ai";
 import { BsFillBagFill } from "react-icons/bs";
 import { RxCross1 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getUserOrders } from "../redux/actions/orderAction";
 import { backend_url, server } from "../server";
@@ -12,9 +12,10 @@ import styles from "../styles/styles";
 
 const UserOrderDetails = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
   const { orders } = useSelector((state) => state.order);
-  const { user } = useSelector((state) => state.user);
+  const { user, isAuthenticated } = useSelector((state) => state.user);
 
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(false);
@@ -23,7 +24,7 @@ const UserOrderDetails = () => {
 
   useEffect(() => {
     dispatch(getUserOrders(user._id));
-  }, [dispatch]);
+  }, [dispatch, user]);
 
   const data = orders && orders.find((item) => item._id === id);
 
@@ -72,6 +73,30 @@ const UserOrderDetails = () => {
         toast.error(error);
       });
   };
+
+  const handleMessageSubmit = async () => {
+    if (isAuthenticated) {
+      const groupTitle = data._id + user._id;
+      const userId = user._id;
+      const sellerId = data.cart[0].shopId;
+
+      await axios
+        .post(`${server}/conversation/create-new-conversation`, {
+          groupTitle,
+          userId,
+          sellerId,
+        })
+        .then((res) => {
+          navigate(`/inbox?${res.data.conversation._id}`);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+        });
+    } else {
+      toast.error("Please login to access this resource");
+    }
+  };
+
 
   return (
     <div className={`py-4 min-h-screen ${styles.section}`}>
@@ -254,7 +279,14 @@ const UserOrderDetails = () => {
       </div>
 
       <br />
-      <div className={`${styles.button} text-white`}>Send Message</div>
+      <div
+        className={`${styles.button} bg-[#6443d1] mt-4 !rounded !h-11`}
+        onClick={handleMessageSubmit}
+      >
+        <span className="text-white flex items-center">
+          Send Message <AiOutlineMessage className="ml-1" />
+        </span>
+      </div>
     </div>
   );
 };

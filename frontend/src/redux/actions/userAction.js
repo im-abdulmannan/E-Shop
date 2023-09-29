@@ -7,7 +7,7 @@ export const loadUser = () => async (dispatch) => {
     dispatch({
       type: "LoadUserRequest",
     });
-    const { data } = await axios.get(`${server}/user/getuser`, {
+    const { data } = await axios.get(`${server}/user/get-user`, {
       withCredentials: true,
     });
     dispatch({
@@ -17,7 +17,7 @@ export const loadUser = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "LoadUserFail",
-      payload: error.response.data.message,
+      payload: error.message,
     });
   }
 };
@@ -38,7 +38,7 @@ export const loadSeller = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "LoadSellerFail",
-      payload: error.response.data.message,
+      payload: error.message,
     });
   }
 };
@@ -71,7 +71,7 @@ export const updateUserInfo =
     } catch (error) {
       dispatch({
         type: "UpdateUserInfoFail",
-        payload: error.response.data.message,
+        payload: error.message,
       });
     }
   };
@@ -104,7 +104,7 @@ export const updateUserAddress =
     } catch (error) {
       dispatch({
         type: "UpdateUserAddressFail",
-        payload: error.response.data.message,
+        payload: error.message,
       });
     }
   };
@@ -129,7 +129,7 @@ export const deleteUserAddress = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "DeleteUserAddressFail",
-      payload: error.response.data.message,
+      payload: error.message,
     });
   }
 };
@@ -151,7 +151,7 @@ export const getAdminUsers = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "AdminUsersFail",
-      payload: error.response.data.message,
+      payload: error.message,
     });
   }
 };

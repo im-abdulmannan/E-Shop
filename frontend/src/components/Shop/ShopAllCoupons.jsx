@@ -29,7 +29,7 @@ const ShopAllCoupons = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`${server}/get-shop-coupons/${seller._id}`, {
+      .get(`${server}/coupon/get-shop-coupons/${seller._id}`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -59,7 +59,7 @@ const ShopAllCoupons = () => {
           minAmount,
           maxAmount,
           selectedProducts,
-          shop: seller._id,
+          shopId: seller._id,
         },
         {
           withCredentials: true,
@@ -78,7 +78,7 @@ const ShopAllCoupons = () => {
   const columns = [
     { field: "id", headerName: "Product id", minWidth: 150, flex: 0.7 },
     { field: "name", headerName: "Name", minWidth: 120, flex: 1.1 },
-    { field: "price", headerName: "Price", minWidth: 100, flex: 0.6 },
+    { field: "discount", headerName: "Discount", minWidth: 160, flex: 0.6 },
     {
       field: "Delete",
       headerName: "",
@@ -99,17 +99,16 @@ const ShopAllCoupons = () => {
   ];
 
   const rows = [];
-  {
-    coupons &&
-      coupons.forEach((item) => {
-        rows.push({
-          id: item._id,
-          name: item.name,
-          price: item.value + "%",
-          sold: 10,
-        });
+
+  coupons &&
+    coupons.forEach((item) => {
+      rows.push({
+        id: item._id,
+        name: item.name,
+        discount: item.value + "%",
+        sold: 10,
       });
-  }
+    });
 
   return (
     <>

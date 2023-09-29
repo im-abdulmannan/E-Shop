@@ -52,6 +52,10 @@ const AdminUsers = () => {
       type: "text",
       minWidth: 130,
       flex: 0.7,
+      cellClassName: (params) => {
+        const role = params.row.role;
+        return role === "Admin" ? "text-green-600" : "text-red-600";
+      },
     },
 
     {

@@ -2,17 +2,22 @@ import axios from "axios";
 import React from "react";
 import { AiOutlineLogout, AiOutlineMessage } from "react-icons/ai";
 import { HiOutlineReceiptRefund, HiOutlineShoppingBag } from "react-icons/hi";
-import { MdOutlineAdminPanelSettings, MdOutlineTrackChanges } from "react-icons/md";
+import {
+  MdOutlineAdminPanelSettings,
+  MdOutlineTrackChanges,
+} from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { RxPerson } from "react-icons/rx";
 import { TbAddressBook } from "react-icons/tb";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { loadUser } from "../../redux/actions/userAction";
 import { server } from "../../server";
 
 const ProfileSidebar = ({ active, setActive }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
 
   const logoutHandler = () => {
@@ -20,8 +25,8 @@ const ProfileSidebar = ({ active, setActive }) => {
       .get(`${server}/user/logout`, { withCredentials: true })
       .then((res) => {
         toast.success(res.data.message);
-        window.location.reload(true);
-        navigate("/login");
+        dispatch(loadUser());
+        navigate("/");
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -134,10 +139,13 @@ const ProfileSidebar = ({ active, setActive }) => {
             className="flex items-center cursor-pointer w-full mb-8"
             onClick={() => setActive(8)}
           >
-            <MdOutlineAdminPanelSettings size={20} color={active === 8 ? "red" : ""} />
+            <MdOutlineAdminPanelSettings
+              size={20}
+              color={active === 8 ? "red" : ""}
+            />
             <span
               className={`pl-3 ${
-                active === 7 ? "text-[red]" : ""
+                active === 8 ? "text-[red]" : ""
               } 800px:block hidden`}
             >
               Admin Dashboard
@@ -148,16 +156,10 @@ const ProfileSidebar = ({ active, setActive }) => {
 
       <div
         className="flex items-center cursor-pointer w-full mb-8"
-        onClick={() => setActive(8) || logoutHandler()}
+        onClick={() => logoutHandler()}
       >
-        <AiOutlineLogout size={20} color={active === 8 ? "red" : ""} />
-        <span
-          className={`pl-3 ${
-            active === 8 ? "text-[red]" : ""
-          } 800px:block hidden`}
-        >
-          Logout
-        </span>
+        <AiOutlineLogout size={20} />
+        <span className={`pl-3 800px:block hidden`}>Logout</span>
       </div>
     </div>
   );

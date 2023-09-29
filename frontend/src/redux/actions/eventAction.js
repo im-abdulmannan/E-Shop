@@ -21,7 +21,7 @@ export const createEvent = (newForm) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "EventCreateFail",
-      payload: error.response.data.message,
+      payload: error.message,
     });
   }
 };
@@ -42,7 +42,7 @@ export const getAllShopEvents = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "GetAllEventsShopFail",
-      payload: error.response.data.message,
+      payload: error.message,
     });
   }
 };
@@ -68,7 +68,7 @@ export const deleteShopEvent = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "DeleteEventFail",
-      payload: error.response.data.message,
+      payload: error.message,
     });
   }
 };
@@ -88,11 +88,10 @@ export const getAllEvents = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "GetAllEventsFail",
-      payload: error.response.data.message,
+      payload: error.message,
     });
   }
 };
-
 
 // Get admin events
 export const getAdminEvents = () => async (dispatch) => {
@@ -111,7 +110,7 @@ export const getAdminEvents = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "AdminEventsFail",
-      payload: error.response.data.message,
+      payload: error.message,
     });
   }
 };

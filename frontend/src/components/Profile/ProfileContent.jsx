@@ -67,7 +67,7 @@ const ProfileContent = ({ active }) => {
   };
 
   return (
-    <div className="w-full pt-16">
+    <div className="w-full mt-16">
       {/* Profile tab */}
       {active === 1 && (
         <>
@@ -83,6 +83,7 @@ const ProfileContent = ({ active }) => {
                   type="file"
                   id="image"
                   className="hidden"
+                  value={avatar}
                   onChange={handleImage}
                 />
                 <label htmlFor="image">
@@ -94,7 +95,7 @@ const ProfileContent = ({ active }) => {
           <br />
           <br />
           <div className="w-full px-5">
-            <form onSubmit={handleSubmit} aria-required={true}>
+            <form onSubmit={handleSubmit}>
               <div className="w-full 800px:flex block pb-3">
                 <div className=" w-[100%] 800px:w-[50%]">
                   <label className="block pb-2">Full Name</label>
@@ -196,7 +197,7 @@ const AllOrders = () => {
 
   useEffect(() => {
     dispatch(getUserOrders(user._id));
-  }, []);
+  }, [dispatch, user]);
 
   const columns = [
     {
@@ -211,9 +212,8 @@ const AllOrders = () => {
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
-          ? "#fff"
-          : "red";
+        const status = params.row.status;
+        return status === "Delivered" ? "text-green-600" : "text-red-600";
       },
     },
     {
@@ -281,7 +281,7 @@ const AllRefundOrders = () => {
 
   useEffect(() => {
     dispatch(getUserOrders(user._id));
-  }, []);
+  }, [dispatch, user]);
 
   const eligibleOrders =
     orders && orders.filter((item) => item?.status === "Processing Refund");
@@ -299,9 +299,8 @@ const AllRefundOrders = () => {
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
-          ? "greenColor"
-          : "redColor";
+        const status = params.row.status;
+        return status === "Refund Success" ? "text-green-600" : "text-red-600";
       },
     },
     {
@@ -369,7 +368,7 @@ const TrackOrder = () => {
 
   useEffect(() => {
     dispatch(getUserOrders(user._id));
-  }, []);
+  }, [dispatch, user]);
 
   const columns = [
     {
@@ -384,9 +383,8 @@ const TrackOrder = () => {
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
-          ? "greenColor"
-          : "redColor";
+        const status = params.row.status;
+        return status === "Delivered" ? "text-green-600" : "text-red-600";
       },
     },
     {
@@ -479,7 +477,6 @@ const ChangePassword = () => {
       </h1>
       <div className="w-full">
         <form
-          aria-required
           onSubmit={passwordChangeHandler}
           className="flex flex-col items-center"
         >
@@ -601,7 +598,7 @@ const Addresses = () => {
               Add new address
             </h1>
             <div className="w-full">
-              <form aria-required onSubmit={handleSubmit} className="w-full">
+              <form onSubmit={handleSubmit} className="w-full">
                 <div className="w-full block p-4">
                   <div className="w-full pb-2">
                     <label htmlFor="country" className="block pb-2">

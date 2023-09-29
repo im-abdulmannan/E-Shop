@@ -34,7 +34,7 @@ const Cart = ({ setOpenCart }) => {
           <div className="w-full h-screen flex items-center justify-center">
             <div className="flex w-full justify-end pt-5 pr-5 fixed top-3 right-3">
               <RxCross1
-                size={25}
+                size={20}
                 className="cursor-pointer"
                 onClick={() => setOpenCart(false)}
               />
@@ -82,7 +82,7 @@ const Cart = ({ setOpenCart }) => {
                   className={`h-[45px] flex items-center justify-center w-[100%] bg-[#e44343] rounded-[5px]`}
                 >
                   <h1 className="text-white text-[18px] font-[600]">
-                    Checkout Now (USD${totalPrice})
+                    Checkout Now (USD${totalPrice.toFixed(2)})
                   </h1>
                 </div>
               </Link>
@@ -136,7 +136,7 @@ const SingleCart = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
         <img
           src={`${backend_url}${data?.images[0]}`}
           alt=""
-          className="w-[130px] h-min ml-2 mr-2 rounded-[5px]"
+          className="w-[50px] h-[50px] object-cover ml-2 mr-2 rounded-full"
         />
         <div className="pl-[5px]">
           <h1>{data.name}</h1>
@@ -144,11 +144,12 @@ const SingleCart = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
             ${data.discountPrice} * {value}
           </h4>
           <h4 className="font-[600] text-[17px] pt[3px] text-[#d02222] font-Roboto">
-            US${totalPrice}
+            US${totalPrice.toFixed(2)}
           </h4>
         </div>
 
         <RxCross1
+        size={20}
           className="cursor-pointer"
           onClick={() => removeFromCartHandler(data)}
         />

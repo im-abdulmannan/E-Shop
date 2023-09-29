@@ -16,14 +16,14 @@ const CountDown = ({ data }) => {
       timeLeft.minutes === 0 &&
       timeLeft.seconds === 0
     ) {
-      axios.delete(`${server}/event//delete-shop-event/${data._id}`);
+      axios.delete(`${server}/event/delete-shop-event/${data._id}`);
     }
 
     return () => clearTimeout(timer);
   });
 
   function calculateTimeLeft() {
-    const difference = +new Date(data.finish_date) - +new Date();
+    const difference = +new Date(data?.finish_date) - +new Date();
     let timeLeft = {};
 
     if (difference > 0) {
