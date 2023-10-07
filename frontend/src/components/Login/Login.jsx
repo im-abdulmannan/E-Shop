@@ -31,7 +31,7 @@ const Login = () => {
       )
       .then((res) => {
         toast.success("Login Success!");
-        navigate("/");
+        navigate("/profile");
         window.location.reload();
       });
   };
