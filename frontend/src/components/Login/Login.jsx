@@ -4,7 +4,6 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { loadUser } from "../../redux/actions/userAction.js";
 import { server } from "../../server.js";
 import styles from "../../styles/styles.js";
 
@@ -33,11 +32,7 @@ const Login = () => {
       .then((res) => {
         toast.success("Login Success!");
         navigate("/");
-        dispatch(loadUser());
         window.location.reload();
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
       });
   };
 
