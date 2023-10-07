@@ -5,7 +5,7 @@ const { Navigate } = require("react-router-dom");
 const ProtectedRoute = ({ children }) => {
   const { loading, isAuthenticated } = useSelector((state) => state.user);
 
-  if (loading === false) {
+  if (loading === true) {
     return <Loader />;
   } else {
     if (!isAuthenticated) {
